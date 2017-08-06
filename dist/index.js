@@ -56,3 +56,4 @@ if (require.main === module) {
         console.error(err);
     });
 }
+//# sourceMappingURL=index.js.map
