@@ -9,12 +9,19 @@
 <br/>
 [![NPM](https://nodei.co/npm/does-this-module-install.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/does-this-module-install/)
 <!-- endbadge -->
-npm encourages the creation of small modules to compose a larger system.
+
+npm enables creation of small modules to compose larger systems.
 One problem that surfaces is that smaller modules have to be tested for
 deployment.
 
-A common cause of error is when a dependency is listed as a dev-dependency. This causes needless frustration - and multiple
-trips to a the git-repo to ensure it all works as intended.
+A common cause of error is when a dependency is listed as a dev-dependency.
+This causes needless frustration - in ensuring all will work.
+
+This module, provides a unit installation test as a function.
+The function is independent of test framework. It throws on error
+when installing it's root-parent module. Root parent is defined as
+the first subdirectory containing `node_modules`.
+
 
 This module, provides a unit installation test, that tests an
 npm module can be self installed in production mode.
@@ -33,11 +40,12 @@ yarn install doed-this-module-install --save-dev
 
 ## Usage
 
-`runInstallTest` is a simple function that detects the current root module, uses the relative path
-to install this module in a temp directory, by spawning an npm task. The function is designed to be
-called from your test framework of choice.
+`runInstallTest` is a simple function that detects the current parent-root module,
+uses it's relative path to install the module into a temp directory.
 
-It returns a success message or throws an error.
+The function is independent of test framework and returns a success message or throws an error.
+Use shown below is tied to `mocha`, should be easy enough to modify as needed.
+
 
 ```TypeScript
 // somewhere in your tests
