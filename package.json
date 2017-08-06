@@ -1,0 +1,151 @@
+{
+  "name": "does-this-module-install",
+  "version": "1.0.0",
+  "description": "A starter package for typescript projects",
+  "keywords": [
+    "TypeScript",
+    "starter",
+    "node",
+    "boilerplate"
+  ],
+  "author": "Shishir Ramam",
+  "repository": "sramam/does-this-module-install",
+  "license": "Apache-2.0",
+  "private": false,
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "scripts"
+  ],
+  "scripts": {
+    "junk": "node build/index.js",
+    "staged-mods-ok": "git-mods --staged_ok",
+    "no-mods": "git-mods",
+    "clean": "rimraf build coverage",
+    "clean:dist": "rimraf dist",
+    "clean:ts-cover": "rimraf coverage/typescript",
+    "init:ts-cover": "mkdirp coverage/typescript",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "compile:build": "tsc",
+    "compile:dist": "tsc -p tsconfig.dist.json",
+    "compile:watch": "tsc -w",
+    "sh": "npm-sh",
+    "secure": "nsp check",
+    "check": "npm outdated",
+    "coverage": "run-batch",
+    "coverage:dist": "run-batch",
+    "remap-html": "remap-istanbul -i coverage/coverage.json -o coverage/typescript -t html",
+    "remap-json": "remap-istanbul -i coverage/coverage.json -o coverage/typescript/coverage.json -t json",
+    "coverage-report": "istanbul report --include=coverage/typescript/coverage.json text-summary",
+    "check-coverage": "istanbul check-coverage --include coverage/typescript/coverage.json",
+    "test-with-cover": "istanbul cover ./node_modules/.bin/_mocha -- --opts mocha.opts",
+    "test-without-cover": "mocha --opts mocha.opts",
+    "build": "npm-run-batch",
+    "build:dist": "run-batch",
+    "build:watch": "cross-env NODE_ENV=production run-batch",
+    "test": "run-batch",
+    "test:dist": "run-batch",
+    "pkg-ok": "pkg-ok",
+    "precommit": "run-batch",
+    "prepush": "run-batch",
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "run-batch": {
+    "build": [
+      "clean",
+      "lint",
+      "compile:build",
+      "test"
+    ],
+    "build:watch": [
+      "compile:watch"
+    ],
+    "build:dist": [
+      "lint",
+      "clean",
+      "compile:build",
+      "test:dist",
+      "clean:dist",
+      "compile:dist",
+      "pkg-ok"
+    ],
+    "test:dist": [
+      "test-with-cover",
+      "coverage:dist"
+    ],
+    "test": [
+      "test-with-cover",
+      "coverage"
+    ],
+    "coverage": [
+      "clean:ts-cover",
+      "init:ts-cover",
+      "remap-html",
+      "remap-json",
+      "coverage-report"
+    ],
+    "coverage:dist": [
+      "clean:ts-cover",
+      "init:ts-cover",
+      "remap-html",
+      "remap-json",
+      "coverage-report",
+      "check-coverage"
+    ],
+    "precommit": [
+      "postinstall",
+      "build:dist",
+      "staged-mods-ok"
+    ],
+    "prepush": [
+      "build:dist",
+      "secure",
+      "no-mods"
+    ]
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.2",
+    "@types/circular-json": "^0.1.30",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^8.0.19",
+    "@types/semver": "^5.3.31",
+    "chai": "^4.1.0",
+    "commander": "^2.9.0",
+    "coveralls": "^2.12.0",
+    "cross-env": "^5.0.3",
+    "git-mods": "^1.0.4",
+    "graceful-fs": "^4.1.11",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "node-emoji": "^1.5.1",
+    "npm-run-batch": "0.0.6",
+    "npm-sh": "^1.0.1",
+    "nsp": "^2.6.3",
+    "nsp-formatter-checkstyle": "^1.0.1",
+    "nsp-formatter-remarkup": "^1.0.2",
+    "pkg-ok": "^1.0.1",
+    "remap-istanbul": "^0.9.5",
+    "rimraf": "^2.6.1",
+    "tslint": "^5.5.0",
+    "typescript": "^2.2.1"
+  },
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "find-package-json": "^1.0.0",
+    "parse-git-config": "^1.1.1",
+    "runtime-engine-check": "^1.0.0",
+    "semver": "^5.3.0",
+    "shelljs": "^0.7.8",
+    "tmp": "0.0.31"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
+  }
+}
