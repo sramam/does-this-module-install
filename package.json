@@ -86,6 +86,7 @@
       "init:ts-cover",
       "remap-html",
       "remap-json",
+      "remap-lcov",
       "coverage-report"
     ],
     "coverage:dist": [
@@ -93,6 +94,7 @@
       "init:ts-cover",
       "remap-html",
       "remap-json",
+      "remap-lcov",
       "coverage-report",
       "check-coverage"
     ],
