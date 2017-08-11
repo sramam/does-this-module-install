@@ -16,18 +16,15 @@ const engchk = require("runtime-engine-check");
 engchk();
 function findNpmRoot() {
     const npm = sh.which('npm');
-    const root = sh.exec(`${npm} root`, { silent: true }).stdout.split(path.sep).reduce((_, subdir) => {
-        _.found = _.found || !!subdir.match('node_modules');
-        (!_.found) && _.path.push(subdir);
-        return _;
-    }, { path: [], found: false });
-    return root.path.join(path.sep);
+    const root = sh.exec(`${npm} root`, { silent: true });
+    return path.resolve(`${root}/..`);
 }
 function getNpmPath() {
     return process.env.npm_execpath || sh.which(`npm`);
 }
 exports.runInstallTest = () => __awaiter(this, void 0, void 0, function* () {
     const result = [];
+    const cwd = process.cwd();
     try {
         const npm = getNpmPath();
         const pkgpath = findNpmRoot();
@@ -38,11 +35,13 @@ exports.runInstallTest = () => __awaiter(this, void 0, void 0, function* () {
         const o1 = sh.exec(`${npm} init -f`, { silent: true });
         result.push(o1);
         const o2 = sh.exec(`${npm} install ${pkgpath}`, { silent: true });
+        sh.cd(cwd);
         result.push(o2);
         return `success! installing ${pkg.name} from ${pkgpath}`;
     }
     catch (err) {
         if (true) {
+            sh.cd(cwd);
             console.log(JSON.stringify(result, null, 2));
             throw err;
         }

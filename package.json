@@ -1,6 +1,6 @@
 {
   "name": "does-this-module-install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A starter package for typescript projects",
   "keywords": [
     "TypeScript",

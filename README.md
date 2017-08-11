@@ -1,4 +1,5 @@
 # does-this-module-install
+
 <!-- badge -->
 [![npm license](https://img.shields.io/npm/l/does-this-module-install.svg)](https://www.npmjs.com/package/does-this-module-install)
 [![travis status](https://img.shields.io/travis/sramam/does-this-module-install.svg)](https://travis-ci.org/sramam/does-this-module-install)
@@ -21,7 +22,6 @@ This module, provides a unit installation test as a function.
 The function is independent of test framework. It throws on error
 when installing it's root-parent module. Root parent is defined as
 the first subdirectory containing `node_modules`.
-
 
 This module, provides a unit installation test, that tests an
 npm module can be self installed in production mode.
@@ -46,7 +46,6 @@ uses it's relative path to install the module into a temp directory.
 The function is independent of test framework and returns a success message or throws an error.
 Use shown below is tied to `mocha`, should be easy enough to modify as needed.
 
-
 ```TypeScript
 // somewhere in your tests
 import { runInstallTest } from 'does-this-module-install
@@ -55,12 +54,13 @@ import { runInstallTest } from 'does-this-module-install
 // any test framework of your choice
 describe(`regular module tests`, () => {
   it(`install test`, async () => {
-    expect(runInstallTest).to.equal(true);
+    expect(await runInstallTest()).to.match(/success! installing .*/);
   });
 });
 ```
 
 ## Code of conduct
+
 Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md).
 By participating in this project you agree to abide by its terms.
 
